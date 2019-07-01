@@ -1,0 +1,215 @@
+/* This file is not a part of the OpenMV project.
+ * Initiative of Vladislav Rykov (rykovinternational@gmail.com)
+ * 
+ * OV7670 register definitions.
+ */
+#ifndef __REG_REGS_H__
+#define __REG_REGS_H__
+
+#define PID_VAL	(0x76)
+#define VER_VAL	(0x73)
+#define MIDH_VAL	(0x7F)
+#define MIDL_VAL	(0xA2)
+
+/* Device Control Register List */
+#define GAIN	(0x00)
+#define BLUE	(0x01)
+#define RED	(0x02)
+#define VREF	(0x03)
+#define COM1	(0x04)
+#define BAVE	(0x05)
+#define GbAVE	(0x06)
+#define AECHH	(0x07)
+#define RAVE	(0x08)
+#define COM2	(0x09)
+#define REG_PID	(0x0A)
+#define REG_VER	(0x0B)
+
+#define COM3	(0x0C)
+#define COM3_SET_SCALE(__REG, __EN)	((__REG & 0xF7) | ((__EN & 0x01) << 3))
+#define COM3_SET_DCW(__REG, __EN)	((__REG & 0xFB) | ((__EN & 0x01) << 2))
+
+#define COM4	(0x0D)
+#define COM5	(0x0E)
+#define COM6	(0x0F)
+#define AECH	(0x10)
+#define CLKRC	(0x11)
+
+#define COM7	(0x12)
+#define COM7_REGISTER_RESET	(0x80)
+#define COM7_CIF_OUT		(0x20)
+#define COM7_QVGA_OUT		(0x10)
+#define COM7_QCIF_OUT		(0x08)
+#define COM7_SET_COLOR_BAR(__REG, __EN)	((__REG & 0xFD) | ((__EN & 0x01) << 1))
+
+#define COM8	(0x13)
+#define COM8_SET_AWB(__REG, __EN)	((__REG & 0xFD) | ((__EN & 0x01) << 1))
+#define COM8_SET_AGC(__REG, __EN)	((__REG & 0xFB) | ((__EN & 0x01) << 2))
+#define COM8_SET_AEC(__REG, __EN)	((__REG & 0xFE) | ((__EN & 0x01) << 0))
+
+#define COM9	(0x14)
+#define COM10	(0x15)
+#define HSTART	(0x17)
+#define HSTOP	(0x18)
+#define VSTRT	(0x19)
+#define VSTOP	(0x1A)
+#define PSHFT	(0x1B)
+#define REG_MIDH	(0x1C)
+#define REG_MIDL	(0x1D)
+
+#define MVFP	(0x1E)
+#define MVFP_SET_MIRROR(__REG, __EN)	((__REG & 0xCF)|((__EN & 1) << 5))
+#define MVFP_SET_VFLIP(__REG, __EN)	((__REG & 0xEF)|((__EN & 1) << 4))
+
+#define LAEC	(0x1F)
+#define ADCCTR0	(0x20)
+#define ADCCTR1	(0x21)
+#define ADCCTR2	(0x22)
+#define ADCCTR3	(0x23)
+#define AEW	(0x24)
+#define AEB	(0x25)
+#define VPT	(0x26)
+#define BBIAS	(0x27)
+#define GbBIAS	(0x28)
+#define RSVD	(0x29)
+#define EXHCH	(0x2A)
+#define EXHCL	(0x2B)
+#define RBIAS	(0x2C)
+#define ADVFL	(0x2D)
+#define ADVFH	(0x2E)
+#define YAVE	(0x2F)
+#define HSYST	(0x30)
+#define HSYEN	(0x31)
+#define HREF	(0x32)
+#define CHLF	(0x33)
+#define ARBLM	(0x34)
+#define ADC	(0x37)
+#define ACOM	(0x38)
+#define OFON	(0x39)
+#define TSLB	(0x3A)
+#define COM11	(0x3B)
+#define COM12	(0x3C)
+#define COM13	(0x3D)
+
+#define COM14	(0x3E)
+#define COM14_SET_PCLK_SCALING(__REG, __EN)	((__REG & 0xEF) | ((__EN & 0x01) << 4))
+#define COM14_SET_MANUAL_SCALING(__REG, __EN)	((__REG & 0xF7) | ((__EN & 0x01) << 3))
+
+#define EDGE	(0x3F)
+#define COM15	(0x40)
+#define COM16	(0x41)
+
+#define COM17	(0x42)
+#define COM17_SET_DSP_COLOR_BAR(__REG, __EN)	((__REG & 0xF7) | ((__EN & 0x01) << 3))
+
+#define AWBC1	(0x43)
+#define AWBC2	(0x44)
+#define AWBC3	(0x45)
+#define AWBC4	(0x46)
+#define AWBC5	(0x47)
+#define AWBC6	(0x48)
+#define REG4B	(0x4B)
+#define DNSTH	(0x4C)
+#define MTX1	(0x4F)
+#define MTX2	(0x50)
+#define MTX3	(0x51)
+#define MTX4	(0x52)
+#define MTX5	(0x53)
+#define MTX6	(0x54)
+#define BRIGHT	(0x55)
+#define CONTRAS	(0x56)
+#define CONTRAS_CENTER	(0x57)
+#define MTXS	(0x58)
+#define LCC1	(0x62)
+#define LCC2	(0x63)
+#define LCC3	(0x64)
+#define LCC4	(0x65)
+#define LCC5	(0x66)
+#define MANU	(0x67)
+#define MANV	(0x68)
+#define GFIX	(0x69)
+#define GGAIN	(0x6A)
+#define DBLV	(0x6B)
+#define AWBCTR3	(0x6C)
+#define AWBCTR2	(0x6D)
+#define AWBCTR1	(0x6E)
+#define AWBCTR0	(0x6F)
+
+#define SCALING_XSC	(0x70)
+#define SCALING_XSC_SET_TEST_PATTERN(__PATTERN) (__PATTERN << 6)
+
+#define SCALING_YSC	(0x71)
+#define SCALING_YSC_SET_TEST_PATTERN(__PATTERN) (__PATTERN << 5)
+
+#define SCALING_DCWCTR	(0x72)
+
+#define SCALING_PCLK_DIV	(0x73)
+#define SCALING_PCLK_DIV_BYPASS(__REG, __EN)	((__REG & 0xF7) | ((__EN & 0x01) << 3))
+
+#define REG74	(0x74)
+#define REG75	(0x75)
+#define REG76	(0x76)
+#define REG77	(0x77)
+#define SLOP	(0x7A)
+#define GAM1	(0x7B)
+#define GAM2	(0x7C)
+#define GAM3	(0x7D)
+#define GAM4	(0x7E)
+#define GAM5	(0x7F)
+#define GAM6	(0x80)
+#define GAM7	(0x81)
+#define GAM8	(0x82)
+#define GAM9	(0x83)
+#define GAM10	(0x84)
+#define GAM11	(0x85)
+#define GAM12	(0x86)
+#define GAM13	(0x87)
+#define GAM14	(0x88)
+#define GAM15	(0x89)
+#define RGB444	(0x8C)
+#define DM_LNL	(0x92)
+#define DM_LNH	(0x93)
+#define LCC6	(0x94)
+#define LCC7	(0x95)
+#define BD50ST	(0x9D)
+#define BD60ST	(0x9E)
+#define HAECC1	(0x9F)
+#define HAECC2	(0xA0)
+#define SCALING_PCLK_DELAY	(0xA2)
+#define NT_CTRL	(0xA4)
+#define BD50MAX	(0xA5)
+#define HAECC3	(0xA6)
+#define HAECC4	(0xA7)
+#define HAECC5	(0xA8)
+#define HAECC6	(0xA9)
+#define HAECC7	(0xAA)
+#define BD60MAX	(0xAB)
+#define STR_OPT	(0xAC)
+#define STR_R	(0xAD)
+#define STR_G	(0xAE)
+#define STR_B	(0xAF)
+#define ABLC1	(0xB1)
+#define THL_ST	(0xB3)
+#define THL_DLT	(0xB5)
+#define AD_CHB	(0xBE)
+#define AD_CHR	(0xBF)
+#define AD_CHGb	(0xC0)
+#define AD_CHGr	(0xC1)
+#define SATCTR	(0xC9)
+
+typedef enum {
+	PCLK_NO_SCALING = 0,
+	PCLK_SCALING_BY_2,
+	PCLK_SCALING_BY_4,
+	PCLK_SCALING_BY_8,
+	PCLK_SCALING_BY_16,
+} pclk_scaling_factor_t;
+
+typedef enum {
+	NO_TEST_PATTERN = 0,
+	TEST_PATTERN_SHIFTING_1,
+	TEST_PATTERN_COLOR_BAR,
+	TEST_PATTERN_COLOR_BAR_FADING_TO_GRAY,
+} test_pattern_t;
+
+#endif	/* __REG_REGS_H__ */
