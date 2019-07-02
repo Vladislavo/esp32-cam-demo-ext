@@ -138,8 +138,10 @@ esp_err_t camera_probe(const camera_config_t* config, camera_model_t* out_camera
     conf.mode = GPIO_MODE_OUTPUT;
     gpio_config(&conf);
 
+    gpio_pulldown_en(config->pin_reset);
     gpio_set_level(config->pin_reset, 0);
     delay(10);
+    gpio_pulldown_dis(config->pin_reset);
     gpio_set_level(config->pin_reset, 1);
     delay(10);
 
@@ -243,7 +245,7 @@ esp_err_t camera_init(const camera_config_t* config)
             s_state->dma_filter = &dma_filter_grayscale;
         }
         s_state->in_bytes_per_pixel = 2;       // camera sends YUYV
-        s_state->fb_bytes_per_pixel = 2;       // frame buffer stores Y8
+        s_state->fb_bytes_per_pixel = 1;       // frame buffer stores Y8
     } else if (pix_format == PIXFORMAT_RGB565) {
         if (!(s_state->sensor.id.PID != OV7725_PID || s_state->sensor.id.PID != OV7670_PID)) {
             ESP_LOGE(TAG, "RGB565 format is only supported for ov7225 and ov7670");
@@ -489,8 +491,6 @@ static esp_err_t dma_desc_init()
     s_state->dma_done = false;
     s_state->dma_sample_count = dma_sample_count;
     
-    ESP_LOGI(TAG, "dma_sample_count = %d", dma_sample_count);
-    
     return ESP_OK;
 }
 
@@ -562,10 +562,10 @@ static void i2s_init()
     gpio_matrix_in(config->pin_d5, I2S0I_DATA_IN5_IDX, false);
     gpio_matrix_in(config->pin_d6, I2S0I_DATA_IN6_IDX, false);
     gpio_matrix_in(config->pin_d7, I2S0I_DATA_IN7_IDX, false);
-    gpio_matrix_in(config->pin_vsync, I2S0I_V_SYNC_IDX, false);
+    gpio_matrix_in(config->pin_vsync, I2S0I_V_SYNC_IDX, true);
     gpio_matrix_in(0x38, I2S0I_H_SYNC_IDX, false);
     gpio_matrix_in(config->pin_href, I2S0I_H_ENABLE_IDX, false);
-    gpio_matrix_in(config->pin_pclk, I2S0I_WS_IN_IDX, true);
+    gpio_matrix_in(config->pin_pclk, I2S0I_WS_IN_IDX, false);
 
     // Enable and configure I2S peripheral
     periph_module_enable(PERIPH_I2S0_MODULE);
@@ -659,7 +659,6 @@ static void i2s_run()
 
 static void IRAM_ATTR signal_dma_buf_received(bool* need_yield)
 {
-    ESP_EARLY_LOGV(TAG, "singal_dma_buf_received");
     size_t dma_desc_filled = s_state->dma_desc_cur;
     s_state->dma_desc_cur = (dma_desc_filled + 1) % s_state->dma_desc_count;
     s_state->dma_received_count++;
@@ -709,7 +708,6 @@ static size_t get_fb_pos()
 static void IRAM_ATTR dma_filter_task(void *pvParameters)
 {
     while (true) {
-	ESP_EARLY_LOGV(TAG, "dma_filter_task");
         size_t buf_idx;
         xQueueReceive(s_state->data_ready, &buf_idx, portMAX_DELAY);
         if (buf_idx == SIZE_MAX) {

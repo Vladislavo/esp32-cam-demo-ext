@@ -161,7 +161,7 @@ static const uint8_t default_regs[][2] = {
     {SATCTR	, 0xC0},
 };
 
-/*
+
 static void frame_control(
     sensor_t *sensor,
     uint8_t hstart, 
@@ -177,7 +177,6 @@ static void frame_control(
     SCCB_Write(sensor->slv_addr, VSTOP, vstart >> 2);
     SCCB_Write(sensor->slv_addr, VREF, ((vstop & 0x03) << 2) | (vstart & 0x03));
 }
-*/
 
 static int reset(sensor_t *sensor)
 {
@@ -214,7 +213,7 @@ static int set_pixformat(sensor_t *sensor, pixformat_t pixformat)
             break;
         case PIXFORMAT_YUV422:
         case PIXFORMAT_GRAYSCALE:
-            //reg =  COM7_SET_FMT(reg, COM7_FMT_YUV);
+            // reg =  COM7_SET_FMT(reg, COM7_FMT_YUV);
             break;
         default:
             return -1;
@@ -418,7 +417,7 @@ int ov7670_init(sensor_t *sensor)
     SENSOR_HW_FLAGS_SET(sensor, SENSOR_HW_FLAGS_FSYNC, 1);
     SENSOR_HW_FLAGS_SET(sensor, SENSOR_HW_FLAGS_JPEGE, 0);
 
-    // frame_control(sensor, 196, 52, 8, 488);
+    frame_control(sensor, 196, 52, 8, 232);
 
     return 0;
 }
