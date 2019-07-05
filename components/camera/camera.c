@@ -562,7 +562,7 @@ static void i2s_init()
     gpio_matrix_in(config->pin_d5, I2S0I_DATA_IN5_IDX, false);
     gpio_matrix_in(config->pin_d6, I2S0I_DATA_IN6_IDX, false);
     gpio_matrix_in(config->pin_d7, I2S0I_DATA_IN7_IDX, false);
-    gpio_matrix_in(config->pin_vsync, I2S0I_V_SYNC_IDX, true);
+    gpio_matrix_in(config->pin_vsync, I2S0I_V_SYNC_IDX, false);
     gpio_matrix_in(0x38, I2S0I_H_SYNC_IDX, false);
     gpio_matrix_in(config->pin_href, I2S0I_H_ENABLE_IDX, false);
     gpio_matrix_in(config->pin_pclk, I2S0I_WS_IN_IDX, false);
@@ -798,8 +798,6 @@ static void IRAM_ATTR dma_filter_rgb565(const dma_elem_t* src, lldesc_t* dma_des
 {
     assert(s_state->sampling_mode == SM_0A0B_0B0C ||
            s_state->sampling_mode == SM_0A00_0B00);
-
-    //ESP_LOGV(TAG, "dma_filter_rgb565");
 
     const int unroll = 2;         // manually unrolling 2 iterations of the loop
     const int samples_per_pixel = 2;
