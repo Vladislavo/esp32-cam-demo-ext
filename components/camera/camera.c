@@ -790,7 +790,7 @@ static void IRAM_ATTR dma_filter_jpeg(const dma_elem_t* src, lldesc_t* dma_desc,
 static inline void rgb565_to_888(uint8_t in1, uint8_t in2, uint8_t* dst)
 {
     dst[0] = (in2 & 0b00011111) << 3; // blue
-    dst[1] = ((in1 & 0b111) << 5) | ((in2 & 0b11100000 >> 5)); // green
+    dst[1] = ((in1 & 0b111) << 5) | ((in2 & 0b11100000 >> 3)); // green
     dst[2] = in1 & 0b11111000; // red
 }
 
